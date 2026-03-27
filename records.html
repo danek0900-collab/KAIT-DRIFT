@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAIT DRIFT • Рекорды</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="dark">
+    <div class="gradient-bg"></div>
+
+    <header class="header-scroll" id="mainHeader">
+        <div class="logo">KAIT DRIFT</div>
+        <nav>
+            <a href="index.html" class="nav-link">Главная</a>
+            <a href="cars.html" class="nav-link">Машины</a>
+            <a href="events.html" class="nav-link">События</a>
+            <a href="records.html" class="nav-link active">Рекорды</a>
+        </nav>
+        <div class="header-stats">
+            <span class="visit-counter" id="visitCounter">0</span>
+            <button class="theme-btn" id="themeToggle">☀️</button>
+            <button class="admin-login-btn" id="adminLoginBtn">🔐 Админ</button>
+        </div>
+    </header>
+
+    <section id="records" class="records-page">
+        <div class="page-header">
+            <h1 class="page-title">Таблица <span>рекордов</span></h1>
+            <p class="page-desc">Лучшие пилоты мира, России и Японии. Следи за достижениями и становись частью истории дрифта.</p>
+        </div>
+        
+        <div class="records-tabs">
+            <button class="records-tab active" onclick="switchRecordsTab('global')">🌍 Мировые рекорды</button>
+            <button class="records-tab" onclick="switchRecordsTab('russia')">🇷🇺 Рекорды России</button>
+            <button class="records-tab" onclick="switchRecordsTab('japan')">🇯🇵 Рекорды Японии</button>
+        </div>
+
+        <div class="records-table-container">
+            <table class="records-table" id="recordsTable">
+                <thead>
+                    <tr>
+                        <th>Место</th>
+                        <th>Пилот</th>
+                        <th>Машина</th>
+                        <th>Очки</th>
+                        <th>Страна</th>
+                        <th>Событие</th>
+                    </tr>
+                </thead>
+                <tbody id="recordsBody"></tbody>
+            </table>
+        </div>
+
+        <div class="record-cards">
+            <div class="record-card gold">
+                <div class="record-medal">🥇</div>
+                <div class="record-name" id="goldName">Дмитрий Ильюк</div>
+                <div class="record-car" id="goldCar">Toyota Mark II</div>
+                <div class="record-score" id="goldScore">1250</div>
+            </div>
+            <div class="record-card silver">
+                <div class="record-medal">🥈</div>
+                <div class="record-name" id="silverName">Аркадий Цареградцев</div>
+                <div class="record-car" id="silverCar">Nissan Silvia</div>
+                <div class="record-score" id="silverScore">1180</div>
+            </div>
+            <div class="record-card bronze">
+                <div class="record-medal">🥉</div>
+                <div class="record-name" id="bronzeName">Евгений Лосев</div>
+                <div class="record-car" id="bronzeCar">Mazda RX-7</div>
+                <div class="record-score" id="bronzeScore">1100</div>
+            </div>
+        </div>
+
+        <div class="records-history">
+            <h3>📜 История рекордов</h3>
+            <div class="history-list" id="historyList"></div>
+        </div>
+        
+        <div class="records-facts">
+            <h3>💡 Интересные факты</h3>
+            <div class="facts-grid">
+                <div class="fact-card">
+                    <div class="fact-icon">🏆</div>
+                    <p>Наибольшее количество очков в истории дрифта — 1350, установлено Наоки Накамурой на D1GP 2025</p>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-icon">🚗</div>
+                    <p>Toyota Mark II — самая популярная платформа в российском дрифте</p>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-icon">🎯</div>
+                    <p>Рекорд скорости в заносе — 287 км/ч, установлен на Mazda RX-7</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>KAIT DRIFT © 2026 | Культура японского дрифта</p>
+        <p class="visit-stats">👁️ Всего визитов: <span id="footerVisits">0</span></p>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop">↑</button>
+    <button class="sound-control" id="soundToggle">🔊</button>
+
+    <!-- Модальное окно авторизации администратора -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-modal-content">
+            <button class="modal-close" onclick="closeAuthModal()">×</button>
+            <div class="auth-header">
+                <div class="auth-icon">🔐</div>
+                <h2>Вход в админ-панель</h2>
+                <p>Введите учетные данные для доступа</p>
+            </div>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>Логин</label>
+                    <input type="text" id="adminUsername" placeholder="Введите логин" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" id="adminPassword" placeholder="Введите пароль">
+                </div>
+                <button type="submit" class="auth-submit-btn">Войти в админ-панель</button>
+            </form>
+            
+            <div id="authMessage" class="auth-message"></div>
+        </div>
+    </div>
+
+    <!-- АДМИН ПАНЕЛЬ -->
+    <div class="admin-modal" id="adminPanel">
+        <div class="admin-modal-content">
+            <button class="modal-close" onclick="closeAdminPanel()">×</button>
+            <div class="admin-header">
+                <h2 style="margin-bottom: 0.5rem; color: #4da6ff;">⚙️ Админ панель</h2>
+                <button class="admin-logout-btn" onclick="logoutAdmin()">🚪 Выйти</button>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="switchAdminTab('events')">События</button>
+                <button class="admin-tab" onclick="switchAdminTab('prices')">Цены</button>
+                <button class="admin-tab" onclick="switchAdminTab('promocodes')">Промокоды</button>
+                <button class="admin-tab" onclick="switchAdminTab('records')">Рекорды</button>
+                <button class="admin-tab" onclick="switchAdminTab('users')">Пользователи</button>
+            </div>
+
+            <div id="adminEventsTab" class="admin-tab-content active">
+                <h3>Управление событиями</h3>
+                <div class="admin-events-list" id="adminEventsList"></div>
+                <button class="admin-add-btn" onclick="addNewEvent()">+ Добавить событие</button>
+            </div>
+
+            <div id="adminPricesTab" class="admin-tab-content">
+                <h3>Управление ценами</h3>
+                <div class="admin-price-item">
+                    <label>🏁 Пилот (участие на машине)</label>
+                    <input type="number" id="priceDriver" value="5000" min="0" step="100">
+                    <span>₽</span>
+                </div>
+                <div class="admin-price-item">
+                    <label>👑 VIP (панорамный вид + подарки)</label>
+                    <input type="number" id="priceVip" value="3000" min="0" step="100">
+                    <span>₽</span>
+                </div>
+                <div class="admin-price-item">
+                    <label>🎫 Стандартный</label>
+                    <input type="number" id="priceStandard" value="1500" min="0" step="100">
+                    <span>₽</span>
+                </div>
+                <div class="admin-price-item">
+                    <label>🔧 Пит-проход (доступ в боксы)</label>
+                    <input type="number" id="pricePit" value="2000" min="0" step="100">
+                    <span>₽</span>
+                </div>
+                <button class="admin-save-btn" onclick="savePrices()">Сохранить цены</button>
+            </div>
+
+            <div id="adminPromocodesTab" class="admin-tab-content">
+                <h3>Управление промокодами</h3>
+                <div class="admin-promocodes-list" id="adminPromocodesList"></div>
+                <button class="admin-add-btn" onclick="addNewPromocode()">+ Добавить промокод</button>
+            </div>
+
+            <div id="adminRecordsTab" class="admin-tab-content">
+                <h3>Управление рекордами</h3>
+                <div class="admin-records-list" id="adminRecordsList"></div>
+                <button class="admin-add-btn" onclick="addNewRecord()">+ Добавить рекорд</button>
+            </div>
+
+            <div id="adminUsersTab" class="admin-tab-content">
+                <h3>Управление пользователями</h3>
+                <div class="admin-users-stats">
+                    <div class="user-stat-card">
+                        <span class="user-stat-number" id="totalUsers">0</span>
+                        <label>Всего пользователей</label>
+                    </div>
+                    <div class="user-stat-card">
+                        <span class="user-stat-number" id="totalBookings">0</span>
+                        <label>Всего бронирований</label>
+                    </div>
+                </div>
+                <div class="admin-users-list" id="adminUsersList"></div>
+                <button class="admin-add-btn" onclick="addNewAdmin()">+ Добавить администратора</button>
+            </div>
+
+            <div class="admin-message" id="adminMessage"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

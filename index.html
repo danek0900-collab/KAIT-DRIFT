@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAIT DRIFT • Главная</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="dark">
+    <div class="gradient-bg"></div>
+
+    <header class="header-scroll" id="mainHeader">
+        <div class="logo">KAIT DRIFT</div>
+        <nav>
+            <a href="index.html" class="nav-link active">Главная</a>
+            <a href="cars.html" class="nav-link">Машины</a>
+            <a href="events.html" class="nav-link">События</a>
+            <a href="records.html" class="nav-link">Рекорды</a>
+        </nav>
+        <div class="header-stats">
+            <span class="visit-counter" id="visitCounter">0</span>
+            <button class="theme-btn" id="themeToggle">☀️</button>
+            <button class="admin-login-btn" id="adminLoginBtn">🔐 Админ</button>
+        </div>
+    </header>
+
+    <!-- Hero секция -->
+    <section id="hero" class="hero">
+        <div class="hero-image-container">
+            <img src="https://i.pinimg.com/736x/23/4c/66/234c6634cecda4d1c0f6885d190a3161.jpg" alt="Drift car" class="hero-image">
+            <div class="hero-image-overlay"></div>
+        </div>
+        <div class="hero-glow"></div>
+        <div class="hero-content">
+            <h1 class="hero-title"><span>KAIT</span> DRIFT<br>Легендарные машины</h1>
+            <p class="hero-desc">Toyota Mark II, Nissan Silvia, Mazda RX-7 и ещё 9 легенд. Погрузись в мир дрифта, узнай истории легендарных машин и стань частью нашего сообщества.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="12">0</span>
+                    <span class="stat-label">Машин</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="5">0</span>
+                    <span class="stat-label">Событий</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="1000">0</span>
+                    <span class="stat-label">л.с.</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="15000">0</span>
+                    <span class="stat-label">Фанатов</span>
+                </div>
+            </div>
+            
+            <div class="hero-buttons">
+                <a href="cars.html" class="hero-btn primary">Смотреть машины →</a>
+                <a href="events.html" class="hero-btn secondary">Ближайшие события</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="features">
+        <h2 class="section-title">Почему <span>KAIT DRIFT</span></h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🏎️</div>
+                <h3>12+ легендарных машин</h3>
+                <p>Полное описание, характеристики, история каждой модели</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Графики мощности</h3>
+                <p>Визуализация характеристик двигателя каждой машины</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎫</div>
+                <h3>Бронирование билетов</h3>
+                <p>Участвуй в событиях, получай скидки по промокодам</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>Таблица рекордов</h3>
+                <p>Следи за лучшими пилотами мира и России</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Популярные машины (превью) -->
+    <section class="preview-cars">
+        <h2 class="section-title">Популярные <span>машины</span></h2>
+        <div class="preview-grid" id="previewGrid"></div>
+        <div class="preview-more">
+            <a href="cars.html" class="more-btn">Смотреть все машины →</a>
+        </div>
+    </section>
+
+    <!-- Ближайшие события (превью) -->
+    <section class="preview-events">
+        <h2 class="section-title">Ближайшие <span>события</span></h2>
+        <div class="preview-events-grid" id="previewEventsGrid"></div>
+        <div class="preview-more">
+            <a href="events.html" class="more-btn">Все события →</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>KAIT DRIFT © 2026 | Культура японского дрифта</p>
+        <p class="visit-stats">👁️ Всего визитов: <span id="footerVisits">0</span></p>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop">↑</button>
+    <button class="sound-control" id="soundToggle">🔊</button>
+
+    <!-- Модальное окно авторизации администратора -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-modal-content">
+            <button class="modal-close" onclick="closeAuthModal()">×</button>
+            <div class="auth-header">
+                <div class="auth-icon">🔐</div>
+                <h2>Вход в админ-панель</h2>
+                <p>Введите учетные данные для доступа</p>
+            </div>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>Логин</label>
+                    <input type="text" id="adminUsername" placeholder="Введите логин" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" id="adminPassword" placeholder="Введите пароль">
+                </div>
+                <button type="submit" class="auth-submit-btn">Войти в админ-панель</button>
+            </form>
+            
+            <div id="authMessage" class="auth-message"></div>
+        </div>
+    </div>
+
+    <!-- АДМИН ПАНЕЛЬ -->
+    <div class="admin-modal" id="adminPanel">
+        <div class="admin-modal-content">
+            <button class="modal-close" onclick="closeAdminPanel()">×</button>
+            <div class="admin-header">
+                <h2 style="margin-bottom: 0.5rem; color: #4da6ff;">⚙️ Админ панель</h2>
+                <button class="admin-logout-btn" onclick="logoutAdmin()">🚪 Выйти</button>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="switchAdminTab('events')">События</button>
+                <button class="admin-tab" onclick="switchAdminTab('prices')">Цены</button>
+                <button class="admin-tab" onclick="switchAdminTab('promocodes')">Промокоды</button>
+                <button class="admin-tab" onclick="switchAdminTab('records')">Рекорды</button>
+                <button class="admin-tab" onclick="switchAdminTab('users')">Пользователи</button>
+            </div>
+
+            <div id="adminEventsTab" class="admin-tab-content active">
+                <h3>Управление событиями</h3>
+                <div class="admin-events-list" id="adminEventsList"></div>
+                <button class="admin-add-btn" onclick="addNewEvent()">+ Добавить событие</button>
+            </div>
+
+            <div id="adminPricesTab" class="admin-tab-content">
+                <h3>Управление ценами</h3>
+                <div class="admin-price-item">
+                    <label>🏁 Пилот (участие на машине)</label>
+                    <input type="number" id="priceDriver" value="5000" min="0" step="100">
+                    <span>₽</span>
+                </div>
+                <div class="admin-price-item">
+                    <label>👑 VIP (панорамный вид + подарки)</label>
+                    <input type="number" id="priceVip" value="3000" min="0" step="100">
+                    <span>₽</span>
+                </div>
+                <div class="admin-price-item">
+                    <label>🎫 Стандартный</label>
+                    <input type="number" id="priceStandard" value="1500" min="0" step="100">
+                    <span>₽</span>
+                </div>
+                <div class="admin-price-item">
+                    <label>🔧 Пит-проход (доступ в боксы)</label>
+                    <input type="number" id="pricePit" value="2000" min="0" step="100">
+                    <span>₽</span>
+                </div>
+                <button class="admin-save-btn" onclick="savePrices()">Сохранить цены</button>
+            </div>
+
+            <div id="adminPromocodesTab" class="admin-tab-content">
+                <h3>Управление промокодами</h3>
+                <div class="admin-promocodes-list" id="adminPromocodesList"></div>
+                <button class="admin-add-btn" onclick="addNewPromocode()">+ Добавить промокод</button>
+            </div>
+
+            <div id="adminRecordsTab" class="admin-tab-content">
+                <h3>Управление рекордами</h3>
+                <div class="admin-records-list" id="adminRecordsList"></div>
+                <button class="admin-add-btn" onclick="addNewRecord()">+ Добавить рекорд</button>
+            </div>
+
+            <div id="adminUsersTab" class="admin-tab-content">
+                <h3>Управление пользователями</h3>
+                <div class="admin-users-stats">
+                    <div class="user-stat-card">
+                        <span class="user-stat-number" id="totalUsers">0</span>
+                        <label>Всего пользователей</label>
+                    </div>
+                    <div class="user-stat-card">
+                        <span class="user-stat-number" id="totalBookings">0</span>
+                        <label>Всего бронирований</label>
+                    </div>
+                </div>
+                <div class="admin-users-list" id="adminUsersList"></div>
+                <button class="admin-add-btn" onclick="addNewAdmin()">+ Добавить администратора</button>
+            </div>
+
+            <div class="admin-message" id="adminMessage"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

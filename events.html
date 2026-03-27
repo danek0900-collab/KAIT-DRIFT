@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAIT DRIFT • События</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="dark">
+    <div class="gradient-bg"></div>
+
+    <header class="header-scroll" id="mainHeader">
+        <div class="logo">KAIT DRIFT</div>
+        <nav>
+            <a href="index.html" class="nav-link">Главная</a>
+            <a href="cars.html" class="nav-link">Машины</a>
+            <a href="events.html" class="nav-link active">События</a>
+            <a href="records.html" class="nav-link">Рекорды</a>
+        </nav>
+        <div class="header-stats">
+            <span class="visit-counter" id="visitCounter">0</span>
+            <button class="theme-btn" id="themeToggle">☀️</button>
+            <button class="admin-login-btn" id="adminLoginBtn">🔐 Админ</button>
+        </div>
+    </header>
+
+    <section id="events" class="events-page">
+        <div class="page-header">
+            <h1 class="page-title">События <span>2026</span></h1>
+            <p class="page-desc">Стань частью главных дрифт-событий года. Регистрируйся, получай скидки по промокодам и участвуй в гонках!</p>
+        </div>
+        
+        <div class="events-grid" id="eventsGrid"></div>
+        
+        <div class="tickets-info">
+            <h3>Типы билетов</h3>
+            <div class="tickets-grid">
+                <div class="ticket-card">
+                    <div class="ticket-icon">🏁</div>
+                    <h4>Пилот</h4>
+                    <p>Участие на машине, доступ к трассе, питание</p>
+                    <div class="ticket-price" id="ticketPriceDriver">5000 ₽</div>
+                </div>
+                <div class="ticket-card">
+                    <div class="ticket-icon">👑</div>
+                    <h4>VIP</h4>
+                    <p>Панорамный вид, подарки, зона отдыха, фуршет</p>
+                    <div class="ticket-price" id="ticketPriceVip">3000 ₽</div>
+                </div>
+                <div class="ticket-card">
+                    <div class="ticket-icon">🎫</div>
+                    <h4>Стандартный</h4>
+                    <p>Вход на трибуны, участие в розыгрышах</p>
+                    <div class="ticket-price" id="ticketPriceStandard">1500 ₽</div>
+                </div>
+                <div class="ticket-card">
+                    <div class="ticket-icon">🔧</div>
+                    <h4>Пит-проход</h4>
+                    <p>Доступ в боксы, фото с пилотами</p>
+                    <div class="ticket-price" id="ticketPricePit">2000 ₽</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="promo-info">
+            <h3>🎫 Активные промокоды</h3>
+            <div class="promo-list" id="promoList"></div>
+            <p class="promo-hint">*Промокоды можно применить при бронировании</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>KAIT DRIFT © 2026 | Культура японского дрифта</p>
+        <p class="visit-stats">👁️ Всего визитов: <span id="footerVisits">0</span></p>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop">↑</button>
+    <button class="sound-control" id="soundToggle">🔊</button>
+
+    <!-- Модальное окно регистрации -->
+    <div class="register-modal" id="registerModal">
+        <div class="register-modal-content">
+            <button class="modal-close" onclick="closeRegisterModal()">×</button>
+            <h2 style="margin-bottom: 1.5rem; color: #4da6ff; text-align: center;">Регистрация на событие</h2>
+            
+            <div class="register-event-info" id="registerEventInfo">
+                <h3 id="registerEventName"></h3>
+                <p id="registerEventDate"></p>
+                <p id="registerEventLocation"></p>
+            </div>
+
+            <div class="promo-section">
+                <h4>🎫 Есть промокод?</h4>
+                <div class="promo-input-group">
+                    <input type="text" id="promoCode" placeholder="Введите промокод" class="promo-input">
+                    <button class="apply-promo-btn" onclick="applyPromoCode()">Применить</button>
+                </div>
+                <div id="promoMessage" class="promo-message"></div>
+                <div id="discountInfo" class="discount-info"></div>
+            </div>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <input type="text" id="regName" placeholder="Ваше имя" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="regPhone" placeholder="Телефон" required>
+                </div>
+                <div class="form-group">
+                    <select id="regTicket" required>
+                        <option value="">Выберите тип билета</option>
+                        <option value="driver">🏁 Пилот (участие на машине) - 5000₽</option>
+                        <option value="vip">👑 VIP (панорамный вид + подарки) - 3000₽</option>
+                        <option value="standard">🎫 Стандартный - 1500₽</option>
+                        <option value="pit">🔧 Пит-проход (доступ в боксы) - 2000₽</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="regPassengers" required>
+                        <option value="1">1 человек</option>
+                        <option value="2">2 человека</option>
+                        <option value="3">3 человека</option>
+                        <option value="4">4 человека</option>
+                        <option value="5">5+ человек (группа)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea id="regComment" placeholder="Комментарий (пожелания, модель машины если пилот...)" rows="2"></textarea>
+                </div>
+                
+                <div class="form-total" id="formTotal">
+                    Итого: 0 ₽
+                </div>
+
+                <div class="form-agreement">
+                    <label>
+                        <input type="checkbox" id="regAgree" required> 
+                        Согласен с условиями и правилами мероприятия
+                    </label>
+                </div>
+
+                <button type="submit" class="register-submit-btn">Забронировать</button>
+            </form>
+
+            <div class="register-message" id="registerMessage"></div>
+            <div class="register-bookings" id="registerBookings"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно авторизации администратора -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-modal-content">
+            <button class="modal-close" onclick="closeAuthModal()">×</button>
+            <div class="auth-header">
+                <div class="auth-icon">🔐</div>
+                <h2>Вход в админ-панель</h2>
+                <p>Введите учетные данные для доступа</p>
+            </div>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>Логин</label>
+                    <input type="text" id="adminUsername" placeholder="Введите логин" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" id="adminPassword" placeholder="Введите пароль">
+                </div>
+                <button type="submit" class="auth-submit-btn">Войти в админ-панель</button>
+            </form>
+            
+            <div id="authMessage" class="auth-message"></div>
+        </div>
+    </div>
+
+    <!-- АДМИН ПАНЕЛЬ -->
+    <div class="admin-modal" id="adminPanel">
+        <div class="admin-modal-content">
+            <button class="modal-close" onclick="closeAdminPanel()">×</button>
+            <div class="admin-header">
+                <h2 style="margin-bottom: 0.5rem; color: #4da6ff;">⚙️ Админ панель</h2>
+                <button class="admin-logout-btn" onclick="logoutAdmin()">🚪 Выйти</button>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="switchAdminTab('events')">События</button>
+                <button class="admin-tab" onclick="switchAdminTab('prices')">Цены</button>
+                <button class="admin-tab" onclick="switchAdminTab('promocodes')">Промокоды</button>
+                <button class="admin-tab" onclick="switchAdminTab('records')">Рекорды</button>
+                <button class="admin-tab" onclick="switchAdminTab('users')">Пользователи</button>
+            </div>
+
+            <div id="adminEventsTab" class="admin-tab-content active">
+                <h3>Управление событиями</h3>
+                <div class="admin-events-list" id="adminEventsList"></div>
+                <button class="admin-add-btn" onclick="addNewEvent()">+ Добавить событие</button>
+            </div>
+
+            <div id="adminPricesTab" class="admin-tab-content">
+                <h3>Управление ценами</h3>
+                <div class="admin-price-item">
+                    <label>🏁 Пилот (участие на машине)</label>
+                    <input type="number" id="priceDriver" value="5000" min="0" step="100">
+                    <span>₽</span>
+                </div>
+                <div class="admin-price-item">
+                    <label>👑 VIP (панорамный вид + подарки)</label>
+                    <input type="number" id="priceVip" value="3000" min="0" step="100">
+                    <span>₽</span>
+                </div>
+                <div class="admin-price-item">
+                    <label>🎫 Стандартный</label>
+                    <input type="number" id="priceStandard" value="1500" min="0" step="100">
+                    <span>₽</span>
+                </div>
+                <div class="admin-price-item">
+                    <label>🔧 Пит-проход (доступ в боксы)</label>
+                    <input type="number" id="pricePit" value="2000" min="0" step="100">
+                    <span>₽</span>
+                </div>
+                <button class="admin-save-btn" onclick="savePrices()">Сохранить цены</button>
+            </div>
+
+            <div id="adminPromocodesTab" class="admin-tab-content">
+                <h3>Управление промокодами</h3>
+                <div class="admin-promocodes-list" id="adminPromocodesList"></div>
+                <button class="admin-add-btn" onclick="addNewPromocode()">+ Добавить промокод</button>
+            </div>
+
+            <div id="adminRecordsTab" class="admin-tab-content">
+                <h3>Управление рекордами</h3>
+                <div class="admin-records-list" id="adminRecordsList"></div>
+                <button class="admin-add-btn" onclick="addNewRecord()">+ Добавить рекорд</button>
+            </div>
+
+            <div id="adminUsersTab" class="admin-tab-content">
+                <h3>Управление пользователями</h3>
+                <div class="admin-users-stats">
+                    <div class="user-stat-card">
+                        <span class="user-stat-number" id="totalUsers">0</span>
+                        <label>Всего пользователей</label>
+                    </div>
+                    <div class="user-stat-card">
+                        <span class="user-stat-number" id="totalBookings">0</span>
+                        <label>Всего бронирований</label>
+                    </div>
+                </div>
+                <div class="admin-users-list" id="adminUsersList"></div>
+                <button class="admin-add-btn" onclick="addNewAdmin()">+ Добавить администратора</button>
+            </div>
+
+            <div class="admin-message" id="adminMessage"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
